@@ -35,7 +35,7 @@ module Ckeditor
       end
 
       def js_fileuploader(uploader_type, options = {})
-        options = { multiple: true, element: 'fileupload' }.merge(options)
+        options = { multiple: true, element: 'fileupload'.html_safe }.merge(options)
 
         case uploader_type.to_s.downcase
         when 'image' then
@@ -52,7 +52,7 @@ module Ckeditor
         js_options = ActiveSupport::JSON.encode(options)
         js_options.gsub!(/"(EDITOR\.config\.filebrowser(Image|Flash|)UploadUrl)"/, '\1')
 
-        "(function() { new qq.FileUploaderInput(#{js_options}); }).call(this);".html_safe
+        "(function() { new qq.FileUploaderInput('#{js_options}'.html_safe); }).call(this);".html_safe
       end
 
       def filethumb(filename)
